@@ -23,7 +23,7 @@ public class Packaging {
      * @param width - the width of the package
      * @param height - the height of the package
      */
-    public Packaging(Material material) { //, BigDecimal length, BigDecimal width, BigDecimal height) {
+    public Packaging(Material material) {
         this.material = material;
         //this.length = length;
         //this.width = width;
@@ -57,12 +57,14 @@ public class Packaging {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMaterial()); //, getLength(), getWidth(), getHeight());
+        return Objects.hash(getMaterial());
     }
 
     public boolean canFitItem(Item item) {
         return false;
     }
 
-    public BigDecimal getMass() { return null; }
+    public BigDecimal getMass() {
+        return null;
+    }
 }
