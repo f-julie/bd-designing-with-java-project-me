@@ -7,7 +7,7 @@ public class PolyBag extends Packaging {
     /**
      * The material this packaging is made of.
      */
-    private Material LAMINATED_PLASTIC;
+    private Material laminatedPlastic;
     /**
      * Instantiates a new Packaging object.
      *

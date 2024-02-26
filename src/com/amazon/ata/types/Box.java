@@ -6,7 +6,7 @@ public class Box extends Packaging {
     /**
      * The material this packaging is made of.
      */
-    private Material CORRUGATE;
+    private Material corrugate;
 
     /**
      * This packaging's length.
