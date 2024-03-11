@@ -101,4 +101,30 @@ class PackagingDAOTest {
                 .withLength(new BigDecimal(height))
                 .build();
     }
+
+    // My unit test
+    /*
+    @Test
+    public void testFindShipmentOptionsReturnsUniqueOptions() {
+        // GIVEN
+        FulfillmentCenter fc = new FulfillmentCenter("IAD2", "Dulles, VA");
+        Item item = new Item("testItem", 1, 1, 1);
+        Packaging packaging = new Packaging("testPackaging", 2, 2, 2);
+        FcPackagingOption option1 = new FcPackagingOption(fc, packaging);
+        FcPackagingOption option2 = new FcPackagingOption(fc, packaging); // Duplicate
+
+        PackagingDatastore datastore = new PackagingDatastore();
+        datastore.addFcPackagingOption(option1);
+        datastore.addFcPackagingOption(option2);
+
+        PackagingDAO dao = new PackagingDAO(datastore);
+
+        // WHEN
+        List<ShipmentOption> result = dao.findShipmentOptions(item, fc);
+
+        // THEN
+        assertEquals(1, result.size(), "There should be only one unique shipment option");
+    }
+
+     */
 }

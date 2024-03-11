@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface CostStrategy {
++ShipmentCost getCost(ShipmentOption shipmentOption)
+}
+
+class WeightedCostStrategy {
+-double monetaryWeight
+-double carbonWeight
+
++ShipmentCost getCost(ShipmentOption shipmentOption)
+}
+
+class MonetaryCostStrategy {
++ShipmentCost getCost(ShipmentOption shipmentOption)
+}
+
+class CarbonCostStrategy {
++ShipmentCost getCost(ShipmentOption shipmentOption)
+}
+
+CostStrategy <|-- WeightedCostStrategy
+CostStrategy <|-- MonetaryCostStrategy
+CostStrategy <|-- CarbonCostStrategy
+
+@enduml

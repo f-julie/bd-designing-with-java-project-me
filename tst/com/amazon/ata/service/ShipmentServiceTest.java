@@ -69,4 +69,26 @@ class ShipmentServiceTest {
         // THEN
         assertNull(shipmentOption);
     }
+
+    // My test
+    /*
+    @Test
+    public void testFindShipmentOptionThrowsRuntimeExceptionForUnknownFulfillmentCenter() {
+        // GIVEN
+        PackagingDAO packagingDAO = new PackagingDAO();
+        CostStrategy costStrategy = new CostStrategy(); // replace with your actual cost strategy class
+        ShipmentService shipmentService = new ShipmentService(packagingDAO, costStrategy);
+        Item item = new Item(); // replace with actual item
+        FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(); // replace with unknown fulfillment center
+
+        try {
+            // WHEN
+            shipmentService.findShipmentOption(item, fulfillmentCenter);
+            fail("Expected an RuntimeException to be thrown");
+        } catch (RuntimeException e) {
+            // THEN
+            assertThat(e.getMessage(), is("Unknown Fulfillment Center"));
+        }
+    }
+    */
 }

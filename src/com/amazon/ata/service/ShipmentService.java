@@ -2,6 +2,7 @@ package com.amazon.ata.service;
 
 import com.amazon.ata.cost.CostStrategy;
 import com.amazon.ata.dao.PackagingDAO;
+import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
 import com.amazon.ata.types.FulfillmentCenter;
 import com.amazon.ata.types.Item;
 import com.amazon.ata.types.ShipmentCost;
@@ -44,10 +45,28 @@ public class ShipmentService {
      * @return the lowest cost shipment option for the item and fulfillment center, or null if none found
      */
     public ShipmentOption findShipmentOption(final Item item, final FulfillmentCenter fulfillmentCenter) {
+        // Old code
+        /*
         try {
             List<ShipmentOption> results = this.packagingDAO.findShipmentOptions(item, fulfillmentCenter);
             return getLowestCostShipmentOption(results);
         } catch (Exception e) {
+            return null;
+        }
+        */
+
+        try {
+            List<ShipmentOption> results = this.packagingDAO.findShipmentOptions(item, fulfillmentCenter);
+            if (results.isEmpty()) {
+                return ShipmentOption.builder()
+                        .withPackaging(null)
+                        .build();
+            }
+            return getLowestCostShipmentOption(results);
+        } catch (UnknownFulfillmentCenterException e) {
+            throw new RuntimeException("Unknown Fulfillment Center", e);
+        } catch (Exception e) {
+            // Log the exception and return null or handle it as appropriate for your application
             return null;
         }
     }
