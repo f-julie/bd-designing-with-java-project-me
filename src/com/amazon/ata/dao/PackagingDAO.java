@@ -133,12 +133,14 @@ public class PackagingDAO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        {
-            if (!(o instanceof PackagingDAO)) return false;
-            PackagingDAO that = (PackagingDAO) o;
-            return Objects.equals(fcPackagingOptions, that.fcPackagingOptions);
+        if (this == o) {
+            return true;
         }
+        if (!(o instanceof PackagingDAO)) {
+            return false;
+        }
+        PackagingDAO that = (PackagingDAO) o;
+        return Objects.equals(fcPackagingOptions, that.fcPackagingOptions);
     }
 
     @Override
