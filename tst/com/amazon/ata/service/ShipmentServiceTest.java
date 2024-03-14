@@ -55,19 +55,17 @@ class ShipmentServiceTest {
     @Test
     void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() {
         // GIVEN & WHEN
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, nonExistentFC);
-
-        // THEN
-        assertNull(shipmentOption);
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(smallItem, nonExistentFC);
+        }, "Failed to throw RuntimeException.");
     }
 
     @Test
     void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() {
         // GIVEN & WHEN
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, nonExistentFC);
-
-        // THEN
-        assertNull(shipmentOption);
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(largeItem, nonExistentFC);
+        }, "Failed to throw RuntimeException.");
     }
 
     // My test

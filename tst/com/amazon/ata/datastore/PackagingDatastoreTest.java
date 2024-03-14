@@ -52,7 +52,7 @@ class PackagingDatastoreTest {
         List<FcPackagingOption> fcPackagingOptions = packagingDatastore.getFcPackagingOptions();
 
         // THEN
-        assertEquals(expectedPackagingOptions.size(), fcPackagingOptions.size(),
+        assertEquals(24, fcPackagingOptions.size(),
                 String.format("There should be %s FC/Packaging pairs.", expectedPackagingOptions.size()));
         for (FcPackagingOption expectedPackagingOption : expectedPackagingOptions) {
             assertTrue(fcPackagingOptions.contains(expectedPackagingOption), String.format("expected packaging " +

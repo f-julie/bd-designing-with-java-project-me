@@ -28,7 +28,7 @@ public class PackagingDAO {
     //    this.fcPackagingOptions =  new ArrayList<>(datastore.getFcPackagingOptions());
     // }
 
-    private HashMap<FulfillmentCenter, HashSet<FcPackagingOption>> fcPackagingOptions;
+    private Map<FulfillmentCenter, Set<FcPackagingOption>> fcPackagingOptions;
 
     public PackagingDAO(PackagingDatastore datastore) {
         this.fcPackagingOptions = new HashMap<>();
@@ -95,7 +95,7 @@ public class PackagingDAO {
 
         // Check all FcPackagingOptions for a suitable Packaging in the given FulfillmentCenter
         List<ShipmentOption> result = new ArrayList<>();
-        HashSet<FcPackagingOption> fcPackagingOptionsSet = fcPackagingOptions.get(fulfillmentCenter);
+        Set<FcPackagingOption> fcPackagingOptionsSet = fcPackagingOptions.get(fulfillmentCenter);
 
         if (fcPackagingOptionsSet == null) {
             throw new UnknownFulfillmentCenterException(

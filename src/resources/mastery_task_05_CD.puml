@@ -2,26 +2,30 @@
 'https://plantuml.com/class-diagram
 
 interface CostStrategy {
-+ShipmentCost getCost(ShipmentOption shipmentOption)
++getCost(ShipmentOption shipmentOption) : ShipmentCost
 }
 
 class WeightedCostStrategy {
 -double monetaryWeight
 -double carbonWeight
+-monetaryCostStrategy : MonetaryCostStrategy
+-carbonCostStrategy : CarbonCostStrategy
 
-+ShipmentCost getCost(ShipmentOption shipmentOption)
++getCost(ShipmentOption shipmentOption) : ShipmentCost
 }
 
 class MonetaryCostStrategy {
-+ShipmentCost getCost(ShipmentOption shipmentOption)
++getCost(ShipmentOption shipmentOption) : ShipmentCost
 }
 
 class CarbonCostStrategy {
-+ShipmentCost getCost(ShipmentOption shipmentOption)
++getCost(ShipmentOption shipmentOption) : ShipmentCost
 }
 
-CostStrategy <|-- WeightedCostStrategy
-CostStrategy <|-- MonetaryCostStrategy
-CostStrategy <|-- CarbonCostStrategy
+CostStrategy <|.. WeightedCostStrategy
+CostStrategy <|.. MonetaryCostStrategy
+CostStrategy <|.. CarbonCostStrategy
+WeightedCostStrategy --> MonetaryCostStrategy
+WeightedCostStrategy --> CarbonCostStrategy
 
 @enduml

@@ -11,11 +11,11 @@ public class WeightedCostStrategy implements CostStrategy {
     private MonetaryCostStrategy monetaryCostStrategy;
     private CarbonCostStrategy carbonCostStrategy;
 
-    public WeightedCostStrategy(double monetaryWeight, double carbonWeight) {
-        this.monetaryWeight = monetaryWeight;
-        this.carbonWeight = carbonWeight;
-        this.monetaryCostStrategy = new MonetaryCostStrategy();
-        this.carbonCostStrategy = new CarbonCostStrategy();
+    public WeightedCostStrategy(MonetaryCostStrategy monetaryCostStrategy, CarbonCostStrategy carbonCostStrategy) {
+        this.monetaryWeight = 0.8f;
+        this.carbonWeight = 0.2f;
+        this.monetaryCostStrategy = monetaryCostStrategy;
+        this.carbonCostStrategy = carbonCostStrategy;
     }
 
     @Override
