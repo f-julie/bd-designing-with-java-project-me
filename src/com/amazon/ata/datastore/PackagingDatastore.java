@@ -47,13 +47,13 @@ public class PackagingDatastore {
     private FcPackagingOption createBoxPackagingOption(String fcCode,
                                                        String length, String width, String height) {
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
-        Packaging packaging = new Box(Material.CORRUGATE,new BigDecimal(length), new BigDecimal(width), new BigDecimal(height));
+        Packaging packaging = new Box(Material.CORRUGATE, new BigDecimal(length), new BigDecimal(width), new BigDecimal(height));
         return new FcPackagingOption(fulfillmentCenter, packaging);
     }
 
     private FcPackagingOption createPolyBagFcPackagingOption(String fcCode, String polyBagSize) {
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(fcCode);
-        Packaging packaging = new PolyBag(Material.LAMINATED_PLASTIC,new BigDecimal(polyBagSize));
+        Packaging packaging = new PolyBag(Material.LAMINATED_PLASTIC, new BigDecimal(polyBagSize));
 
         return new FcPackagingOption(fulfillmentCenter, packaging);
     }
