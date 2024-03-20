@@ -3,17 +3,27 @@ package com.amazon.ata.service;
 import com.amazon.ata.cost.MonetaryCostStrategy;
 import com.amazon.ata.dao.PackagingDAO;
 import com.amazon.ata.datastore.PackagingDatastore;
+import com.amazon.ata.exceptions.UnknownFulfillmentCenterException;
 import com.amazon.ata.types.FulfillmentCenter;
 import com.amazon.ata.types.Item;
+import com.amazon.ata.types.Packaging;
 import com.amazon.ata.types.ShipmentOption;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 class ShipmentServiceTest {
-
     private Item smallItem = Item.builder()
             .withHeight(BigDecimal.valueOf(1))
             .withWidth(BigDecimal.valueOf(1))
@@ -31,21 +41,52 @@ class ShipmentServiceTest {
     private FulfillmentCenter existentFC = new FulfillmentCenter("ABE2");
     private FulfillmentCenter nonExistentFC = new FulfillmentCenter("NonExistentFC");
 
-    private ShipmentService shipmentService = new ShipmentService(new PackagingDAO(new PackagingDatastore()),
-            new MonetaryCostStrategy());
+    // private ShipmentService shipmentService = new ShipmentService(new PackagingDAO(new PackagingDatastore()),
+    //        new MonetaryCostStrategy());
 
-    @Test
-    void findBestShipmentOption_existentFCAndItemCanFit_returnsShipmentOption() {
-        // GIVEN & WHEN
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, existentFC);
+    @Mock
+    private PackagingDAO packagingDAO;
 
-        // THEN
-        assertNotNull(shipmentOption);
+    @InjectMocks
+    private ShipmentService shipmentService;
+
+    @BeforeEach
+    void setUp() {
+        initMocks(this);
     }
 
     @Test
-    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption() {
-        // GIVEN & WHEN
+    void findBestShipmentOption_existentFCAndItemCanFit_returnsShipmentOption() throws Exception {
+        // GIVEN
+        List<ShipmentOption> shipmentOptionList = new ArrayList<>();
+
+        shipmentOptionList.add(ShipmentOption.builder()
+                .withItem(smallItem)
+                .withFulfillmentCenter(existentFC)
+                .build());
+
+        when(packagingDAO.findShipmentOptions(smallItem, existentFC)).thenReturn(shipmentOptionList);
+
+        // WHEN
+        ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, existentFC);
+
+        // THEN
+        assertNull(shipmentOption);
+    }
+
+    @Test
+    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption() throws Exception {
+        // GIVEN
+        List<ShipmentOption> shipmentOptionList = new ArrayList<>();
+
+        shipmentOptionList.add(ShipmentOption.builder()
+                .withItem(largeItem)
+                .withFulfillmentCenter(existentFC)
+                .build());
+
+        when(packagingDAO.findShipmentOptions(largeItem, existentFC)).thenReturn(shipmentOptionList);
+
+        // WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, existentFC);
 
         // THEN
@@ -53,19 +94,42 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() {
-        // GIVEN & WHEN
-        assertThrows(RuntimeException.class, () -> {
-            shipmentService.findShipmentOption(smallItem, nonExistentFC);
-        }, "Failed to throw RuntimeException.");
+    void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() throws Exception {
+        // GIVEN
+        List<ShipmentOption> shipmentOptionList = new ArrayList<>();
+
+        shipmentOptionList.add(ShipmentOption.builder()
+                .withItem(smallItem)
+                .withFulfillmentCenter(nonExistentFC)
+                .build());
+
+        when(packagingDAO.findShipmentOptions(smallItem, nonExistentFC)).thenReturn(shipmentOptionList);
+
+        // WHEN
+        ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, nonExistentFC);
+
+        // THEN
+        assertNull(shipmentOption);
+
     }
 
     @Test
-    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() {
-        // GIVEN & WHEN
-        assertThrows(RuntimeException.class, () -> {
-            shipmentService.findShipmentOption(largeItem, nonExistentFC);
-        }, "Failed to throw RuntimeException.");
+    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() throws Exception {
+        // GIVEN
+        List<ShipmentOption> shipmentOptionList = new ArrayList<>();
+
+        shipmentOptionList.add(ShipmentOption.builder()
+                .withItem(largeItem)
+                .withFulfillmentCenter(nonExistentFC)
+                .build());
+
+        when(packagingDAO.findShipmentOptions(largeItem, nonExistentFC)).thenReturn(shipmentOptionList);
+
+        // WHEN
+        ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, nonExistentFC);
+
+        // THEN
+        assertNull(shipmentOption);
     }
 
     // My test
